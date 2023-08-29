@@ -24,13 +24,13 @@ resource "aws_security_group" "rabbitmq" {
   )
 }
 
-resource "aws_mq_configuration" "rabbitmq" {
-  description    = "${var.env}-rabbitmq-configuration"
-  name           = "${var.env}-rabbitmq-configuration"
-  engine_type    = var.engine_type
-  engine_version = var.engine_version
-  data           = ""
-}
+#resource "aws_mq_configuration" "rabbitmq" {
+#  description    = "${var.env}-rabbitmq-configuration"
+#  name           = "${var.env}-rabbitmq-configuration"
+#  engine_type    = var.engine_type
+#  engine_version = var.engine_version
+#  data           = ""
+#}
 
 resource "aws_mq_broker" "rabbitmq" {
   broker_name        = "${var.env}-rabbitmq"
@@ -41,10 +41,10 @@ resource "aws_mq_broker" "rabbitmq" {
   security_groups    = [aws_security_group.rabbitmq.id]
   subnet_ids         = var.deployment_mode == "SINGLE INSTANCE" ? [var.subnet_ids[0]] : var.subnet_ids
 
-  configuration {
-    id       = aws_mq_configuration.rabbitmq.id
-    revision = aws_mq_configuration.rabbitmq.latest_revision
-  }
+#  configuration {
+#    id       = aws_mq_configuration.rabbitmq.id
+#    revision = aws_mq_configuration.rabbitmq.latest_revision
+#  }
 
   encryption_options {
       use_aws_owned_key = false
