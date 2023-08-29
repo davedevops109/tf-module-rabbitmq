@@ -7,5 +7,5 @@ data "aws_ssm_parameter" "USER" {
 }
 
 data "aws_ssm_parameter" "PASS" {
-  name = "${var.env}.rabbitmq_PASS"
+  name = "${var.env}.rabbitmq.PASS"
 }
