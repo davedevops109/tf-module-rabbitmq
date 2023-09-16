@@ -33,7 +33,7 @@ resource "aws_security_group" "rabbitmq" {
 #}
 
 resource "aws_mq_broker" "rabbitmq" {
-  broker_name        = "${var.env}-rabbitmq"
+  broker_name        = "${var.env}-rabbitmq1"
   deployment_mode    = var.deployment_mode
   engine_type        = var.engine_type
   engine_version     = var.engine_version
