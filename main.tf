@@ -103,6 +103,8 @@ resource "aws_security_group" "rabbitmq" {
 #  data           = ""
 #}
 
+//we moved from service to ec2 node for rabbitmq, our app doesnot support it.
+
 #resource "aws_mq_broker" "rabbitmq" {
 #  broker_name        = "${var.env}-rabbitmq1"
 #  deployment_mode    = var.deployment_mode
@@ -129,13 +131,13 @@ resource "aws_security_group" "rabbitmq" {
 #}
 
 resource "aws_spot_instance_request" "rabbitmq" {
-  ami           = data.aws_ami.centos8.image_id
-  instance_type = "t3.small"
-  subnet_id = var.subnet_ids[0]
-  vpc_security_group_ids = [aws_security_group.rabbitmq.id]
-  wait_for_fulfillment = true
-  user_data = base64encode(templatefile("${path.module}/user-data.sh", {component = "rabbitmq", env = var.env }))
-  iam_instance_profile = aws_iam_instance_profile.profile.name
+  ami                         = data.aws_ami.centos8.image_id
+  instance_type               = "t3.small"
+  subnet_id                   = var.subnet_ids[0]
+  vpc_security_group_ids      = [aws_security_group.rabbitmq.id]
+  wait_for_fulfillment        = true
+  user_data                   = base64encode(templatefile("${path.module}/user-data.sh", {component = "rabbitmq", env = var.env }))
+  iam_instance_profile        = aws_iam_instance_profile.profile.name
 
   tags = merge(
     local.common_tags,
